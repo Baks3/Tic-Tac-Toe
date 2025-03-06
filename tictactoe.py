@@ -16,7 +16,17 @@ def print_board():
     print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9])
     print('   |   |   ')
 
+def is_board_full(board):
+    if board.count(' ') > 1:
+        return False
+    else:
+        return True
 
+def insert_letter(letter,pos,board):
+    board[pos] = letter
+
+def free_space(pos, board):
+    return board[pos] == ' '
 
 
 print("Welcome to the game!")
