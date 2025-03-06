@@ -29,6 +29,16 @@ def free_space(pos, board):
     return board[pos] == ' '
 
 
+def winner(board,l):
+    return ((board[1] == l and board[2] == l and board[3] == l) or
+    (board[4] == l and board[5] == l and board[6] == l) or
+    (board[7] == l and board[8] == l and board[9] == l) or
+    (board[1] == l and board[4] == l and board[7] == l) or
+    (board[2] == l and board[5] == l and board[8] == l) or
+    (board[3] == l and board[6] == l and board[9] == l) or
+    (board[1] == l and board[5] == l and board[9] == l) or
+    (board[3] == l and board[5] == l and board[7] == l))
+
 print("Welcome to the game!")
 print_board()
 
