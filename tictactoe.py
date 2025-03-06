@@ -1,8 +1,8 @@
 
-
+board = [' ' for i in range(10)]
 
 def print_board():
-    board = [' ' for i in range(10)]
+
 
     print('   |   |   ')
     print(' ' + board[1] + ' | ' + board[2] + ' | ' + board[3])
@@ -16,18 +16,30 @@ def print_board():
     print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9])
     print('   |   |   ')
 
-def is_board_full(board):
+def is_board_full():
     if board.count(' ') > 1:
         return False
     else:
         return True
 
-def insert_letter(letter,pos,board):
+def insert_letter(letter,pos,):
     board[pos] = letter
 
-def free_space(pos, board):
+def free_space(pos, ):
     return board[pos] == ' '
 
+
+def player_move():
+    while True:
+        try:
+            pos = int(input("Choose a position (1-9): "))
+            if pos in range(1, 10) and free_space(pos, board):
+                insert_letter('X', pos, board)
+                break
+            else:
+                print("Invalid move! Try again.")
+        except ValueError:
+            print("Please enter a number.")
 
 def winner(board,l):
     return ((board[1] == l and board[2] == l and board[3] == l) or
