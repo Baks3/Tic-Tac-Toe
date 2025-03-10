@@ -16,7 +16,7 @@ def print_board():
     print('   |   |   ')
 
 def is_board_full():
-    return board.count(' ') == 1  # Only one empty space (index 0)
+    return board.count(' ') == 1  
 
 def insert_letter(letter, pos):
     board[pos] = letter
@@ -54,27 +54,27 @@ def select_random(li):
 def computer_move():
     possibles_moves = [x for x, letter in enumerate(board) if letter == ' ' and x != 0]
     if not possibles_moves:
-        return 0  # No moves available
+        return 0 
 
     for let in ['O', 'X']:
         for i in possibles_moves:
             board_copy = board[:]
             board_copy[i] = let
             if winner(board_copy, let):
-                return i  # Winning/blocking move
+                return i
 
     corners = [i for i in possibles_moves if i in [1, 3, 7, 9]]
     if corners:
         return select_random(corners)
 
     if 5 in possibles_moves:
-        return 5  # Take center if available
+        return 5  
 
     edges = [i for i in possibles_moves if i in [2, 4, 6, 8]]
     if edges:
         return select_random(edges)
 
-    return possibles_moves[0]  # Pick any available move as fallback
+    return possibles_moves[0]  
 
 def main():
     global board
