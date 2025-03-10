@@ -69,6 +69,12 @@ def playerMove():
         except:
             print('Please type a number')
 
+def select_random(li):
+    import random
+    ln = len(li)
+    r = random.randrange(0,ln)
+    return li[r]
+
 print("Welcome to the game!")
 print_board()
 
