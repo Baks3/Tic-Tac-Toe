@@ -51,6 +51,24 @@ def winner(board,l):
     (board[1] == l and board[5] == l and board[9] == l) or
     (board[3] == l and board[5] == l and board[7] == l))
 
+def playerMove():
+    run = True
+    while run:
+        move = input("please select a position to enter the X between 1 to 9")
+        try:
+            move = int(move)
+            if move > 0 and move < 10:
+                if free_space(move):
+                    run = False
+                    insert_letter('X' , move)
+                else:
+                    print('Sorry, this space is occupied')
+            else:
+                print('please type a number between 1 and 9')
+
+        except:
+            print('Please type a number')
+
 print("Welcome to the game!")
 print_board()
 
