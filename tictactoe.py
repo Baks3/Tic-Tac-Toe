@@ -3,31 +3,30 @@ import random
 board = [' ' for _ in range(10)]
 
 def print_board():
-    print('   |   |   ')
-    print(' ' + board[1] + ' | ' + board[2] + ' | ' + board[3])
-    print('   |   |   ')
-    print('------------')
-    print('   |   |   ')
-    print(' ' + board[4] + ' | ' + board[5] + ' | ' + board[6])
-    print('   |   |   ')
-    print('------------')
-    print('   |   |   ')
-    print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9])
-    print('   |   |   ')
+    print("\n")
+    print("   |   |   ")
+    print(f" {board[1]} | {board[2]} | {board[3]} ")
+    print("   |   |   ")
+    print("------------")
+    print("   |   |   ")
+    print(f" {board[4]} | {board[5]} | {board[6]} ")
+    print("   |   |   ")
+    print("------------")
+    print("   |   |   ")
+    print(f" {board[7]} | {board[8]} | {board[9]} ")
+    print("   |   |   ")
+    print("\n")
 
 def is_board_full():
     return ' ' not in board[1:]  
- 
 
 def insert_letter(letter, pos):
-    global board
     board[pos] = letter
-
 
 def free_space(pos):
     return board[pos] == ' '
 
-def winner(board, l):
+def winner(l):
     return (
         (board[1] == l and board[2] == l and board[3] == l) or
         (board[4] == l and board[5] == l and board[6] == l) or
@@ -49,21 +48,21 @@ def player_move():
                 break
         print("Invalid move! Try again.")
 
-
 def select_random(li):
     return random.choice(li)
 
 def computer_move():
     possible_moves = [x for x in range(1, 10) if free_space(x)]
 
-    for let in ['O', 'X']:  # Check winning or blocking move
+
+    for let in ['O', 'X']:  
         for i in possible_moves:
-            board_copy = board[:]
+            board_copy = board[:]  
             board_copy[i] = let
-            if winner(board_copy, let):
+            if winner(let): 
                 return i
 
-    if 5 in possible_moves:  # Prioritize center
+    if 5 in possible_moves:  
         return 5
 
     corners = [i for i in possible_moves if i in [1, 3, 7, 9]]
@@ -74,5 +73,4 @@ def computer_move():
     if edges:
         return select_random(edges)
 
-    return possible_moves[0]  # Last resort
- 
+    return None  

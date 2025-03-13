@@ -1,19 +1,19 @@
 import tictactoe as XO
 
 def main():
-    XO.board = [' ' for _ in range(10)]  # Update XO's board reference
+    XO.board = [' ' for _ in range(10)]
     print("Welcome to Tic-Tac-Toe!")
     XO.print_board()
 
     while True:
-        if XO.winner(XO.board, 'O'):
+        if XO.winner('O'):
             print("Sorry, you lose!")
             break
 
         XO.player_move()
         XO.print_board()
 
-        if XO.winner(XO.board, 'X'):
+        if XO.winner('X'):
             print("You win!")
             break
 
@@ -33,7 +33,6 @@ def main():
 
     play_again()
 
-
 def play_again():
     while True:
         x = input("Do you want to play again? (y/n): ").lower()
@@ -46,8 +45,5 @@ def play_again():
         else:
             print("Invalid input. Enter 'y' or 'n'.")
 
-
-
 if __name__ == "__main__":
     main()
-    
