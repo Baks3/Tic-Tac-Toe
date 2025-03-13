@@ -16,7 +16,8 @@ def print_board():
     print('   |   |   ')
 
 def is_board_full():
-    return board.count(' ') == 1  
+    return ' ' not in board[1:]  
+ 
 
 def insert_letter(letter, pos):
     board[pos] = letter
@@ -38,43 +39,41 @@ def winner(board, l):
 
 def player_move():
     while True:
-        try:
-            move = int(input("Choose a position (1-9): "))
+        move = input("Choose a position (1-9): ")
+        if move.isdigit():
+            move = int(move)
             if move in range(1, 10) and free_space(move):
                 insert_letter('X', move)
                 break
-            else:
-                print("Invalid move! Try again.")
-        except ValueError:
-            print("Please enter a number.")
+        print("Invalid move! Try again.")
+
 
 def select_random(li):
     return random.choice(li)
 
 def computer_move():
-    possibles_moves = [x for x, letter in enumerate(board) if letter == ' ' and x != 0]
-    if not possibles_moves:
-        return 0 
+    possible_moves = [x for x in range(1, 10) if free_space(x)]
 
-    for let in ['O', 'X']:
-        for i in possibles_moves:
+    for let in ['O', 'X']:  # Check winning or blocking move
+        for i in possible_moves:
             board_copy = board[:]
             board_copy[i] = let
             if winner(board_copy, let):
                 return i
 
-    corners = [i for i in possibles_moves if i in [1, 3, 7, 9]]
+    if 5 in possible_moves:  # Prioritize center
+        return 5
+
+    corners = [i for i in possible_moves if i in [1, 3, 7, 9]]
     if corners:
         return select_random(corners)
 
-    if 5 in possibles_moves:
-        return 5  
-
-    edges = [i for i in possibles_moves if i in [2, 4, 6, 8]]
+    edges = [i for i in possible_moves if i in [2, 4, 6, 8]]
     if edges:
         return select_random(edges)
 
-    return possibles_moves[0]  
+    return possible_moves[0]  # Last resort
+ 
 
 def main():
     global board
@@ -82,7 +81,7 @@ def main():
     print("Welcome to Tic-Tac-Toe!")
     print_board()
 
-    while not is_board_full():
+    while True:
         if winner(board, 'O'):
             print("Sorry, you lose!")
             break
@@ -94,8 +93,12 @@ def main():
             print("You win!")
             break
 
+        if is_board_full():
+            print("It's a tie!")
+            break
+
         move = computer_move()
-        if move != 0:
+        if move:
             insert_letter('O', move)
             print(f"Computer placed an O at position {move}:")
             print_board()
@@ -104,11 +107,16 @@ def main():
             print("It's a tie!")
             break
 
-while True:
-    x = input("Do you want to play again? (y/n): ")
-    if x.lower() == 'y':
-        print('--------------------')
-        main()
-    else:
-        print("Goodbye!")
-        break
+def play_again():
+    while True:
+        x = input("Do you want to play again? (y/n): ").lower()
+        if x == 'y':
+            print('--------------------')
+            main()
+        elif x == 'n':
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid input. Enter 'y' or 'n'.")
+
+play_again()
