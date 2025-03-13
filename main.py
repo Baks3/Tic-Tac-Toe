@@ -1,48 +1,64 @@
-import tictactoe as XO
+import tictactoe
 
 def main():
     scores = {'Player': 0, 'Computer': 0}
+
+    print("Welcome to Tic-Tac-Toe!")
+    print("Choose difficulty: Easy (E), Medium (M), Hard (H)")
     
     while True:
-        XO.board = [' ' for _ in range(10)]
-        print("Welcome to Tic-Tac-Toe!")
-        XO.print_board()
+        choice = input("Enter difficulty (E/M/H): ").lower()
+        if choice == 'e':
+            tictactoe.set_difficulty("easy")
+            break
+        elif choice == 'm':
+            tictactoe.set_difficulty("medium")
+            break
+        elif choice == 'h':
+            tictactoe.set_difficulty("hard")
+            break
+        else:
+            print("Invalid choice! Please enter E, M, or H.")
+
+    while True:
+        tictactoe.board = [' ' for _ in range(10)]
+        tictactoe.print_board()
         
         while True:
-            if XO.winner('O'):
+            if tictactoe.winner('O'):
                 print("Sorry, you lose!")
                 scores['Computer'] += 1
                 break
 
-            move = XO.player_move()
-            if move == "exit":
-                XO.quit_game(scores)
+            tictactoe.player_move()
+            tictactoe.print_board()
 
-            XO.print_board()
-
-            if XO.winner('X'):
+            if tictactoe.winner('X'):
                 print("You win!")
                 scores['Player'] += 1
                 break
 
-            if XO.is_board_full():
+            if tictactoe.is_board_full():
                 print("It's a tie!")
                 break
 
-            move = XO.computer_move()
+            move = tictactoe.computer_move()
             if move:
-                XO.insert_letter('O', move)
+                tictactoe.insert_letter('O', move)
                 print(f"Computer placed an O at position {move}:")
-                XO.print_board()
+                tictactoe.print_board()
 
-            if XO.is_board_full():
+            if tictactoe.is_board_full():
                 print("It's a tie!")
                 break
 
         print(f"Score - Player: {scores['Player']} | Computer: {scores['Computer']}")
-        
+
         if not play_again():
-            XO.quit_game(scores)
+            print("Final Score:")
+            print(f"Player: {scores['Player']} | Computer: {scores['Computer']}")
+            print("Goodbye!")
+            break
 
 def play_again():
     while True:
