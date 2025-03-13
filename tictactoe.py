@@ -48,8 +48,8 @@ def set_difficulty(level):
 
 def player_move():
     while True:
-        move = input("Choose a position (1-9) or type 'exit' to quit: ").lower()
-        if move == "exit":
+        move = input("Choose a position (1-9) or type 'exit' or 'quit' to leave the game: ").lower()
+        if move in ['exit', 'quit']:
             quit_game()
         if move.isdigit():
             move = int(move)
