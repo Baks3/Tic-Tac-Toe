@@ -20,7 +20,9 @@ def is_board_full():
  
 
 def insert_letter(letter, pos):
+    global board
     board[pos] = letter
+
 
 def free_space(pos):
     return board[pos] == ' '
@@ -74,49 +76,3 @@ def computer_move():
 
     return possible_moves[0]  # Last resort
  
-
-def main():
-    global board
-    board = [' ' for _ in range(10)]
-    print("Welcome to Tic-Tac-Toe!")
-    print_board()
-
-    while True:
-        if winner(board, 'O'):
-            print("Sorry, you lose!")
-            break
-
-        player_move()
-        print_board()
-
-        if winner(board, 'X'):
-            print("You win!")
-            break
-
-        if is_board_full():
-            print("It's a tie!")
-            break
-
-        move = computer_move()
-        if move:
-            insert_letter('O', move)
-            print(f"Computer placed an O at position {move}:")
-            print_board()
-
-        if is_board_full():
-            print("It's a tie!")
-            break
-
-def play_again():
-    while True:
-        x = input("Do you want to play again? (y/n): ").lower()
-        if x == 'y':
-            print('--------------------')
-            main()
-        elif x == 'n':
-            print("Goodbye!")
-            break
-        else:
-            print("Invalid input. Enter 'y' or 'n'.")
-
-play_again()
