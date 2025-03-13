@@ -14,7 +14,10 @@ def main():
                 scores['Computer'] += 1
                 break
 
-            XO.player_move()
+            move = XO.player_move()
+            if move == "exit":
+                XO.quit_game(scores)
+
             XO.print_board()
 
             if XO.winner('X'):
@@ -39,10 +42,7 @@ def main():
         print(f"Score - Player: {scores['Player']} | Computer: {scores['Computer']}")
         
         if not play_again():
-            print("Final Score:")
-            print(f"Player: {scores['Player']} | Computer: {scores['Computer']}")
-            print("Goodbye!")
-            break
+            XO.quit_game(scores)
 
 def play_again():
     while True:

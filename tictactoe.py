@@ -26,27 +26,39 @@ def insert_letter(letter, pos):
 def free_space(pos):
     return board[pos] == ' '
 
-def winner(l):
+def winner(l, board_copy=None):
+    """
+    Checks if the given letter ('X' or 'O') has won.
+    If board_copy is provided, checks for that board state instead of the global board.
+    """
+    b = board if board_copy is None else board_copy
     return (
-        (board[1] == l and board[2] == l and board[3] == l) or
-        (board[4] == l and board[5] == l and board[6] == l) or
-        (board[7] == l and board[8] == l and board[9] == l) or
-        (board[1] == l and board[4] == l and board[7] == l) or
-        (board[2] == l and board[5] == l and board[8] == l) or
-        (board[3] == l and board[6] == l and board[9] == l) or
-        (board[1] == l and board[5] == l and board[9] == l) or
-        (board[3] == l and board[5] == l and board[7] == l)
+        (b[1] == l and b[2] == l and b[3] == l) or
+        (b[4] == l and b[5] == l and b[6] == l) or
+        (b[7] == l and b[8] == l and b[9] == l) or
+        (b[1] == l and b[4] == l and b[7] == l) or
+        (b[2] == l and b[5] == l and b[8] == l) or
+        (b[3] == l and b[6] == l and b[9] == l) or
+        (b[1] == l and b[5] == l and b[9] == l) or
+        (b[3] == l and b[5] == l and b[7] == l)
     )
 
 def player_move():
     while True:
-        move = input("Choose a position (1-9): ")
+        move = input("Choose a position (1-9) or type 'exit' to quit: ").lower()
+        if move == "exit":
+            return "exit"
         if move.isdigit():
             move = int(move)
             if move in range(1, 10) and free_space(move):
                 insert_letter('X', move)
-                break
+                return move
         print("Invalid move! Try again.")
+
+def quit_game(scores):
+    print(f"Final Score: Player {scores['Player']} - {scores['Computer']} Computer")
+    print("Thanks for playing! Goodbye!")
+    exit()
 
 def select_random(li):
     return random.choice(li)
@@ -54,12 +66,11 @@ def select_random(li):
 def computer_move():
     possible_moves = [x for x in range(1, 10) if free_space(x)]
 
-
     for let in ['O', 'X']:  
         for i in possible_moves:
             board_copy = board[:]  
             board_copy[i] = let
-            if winner(let): 
+            if winner(let, board_copy):  
                 return i
 
     if 5 in possible_moves:  
