@@ -5,7 +5,8 @@ def main():
 
     print("Welcome to Tic-Tac-Toe!")
     print("Choose difficulty: Easy (E), Medium (M), Hard (H)")
-    
+    XO.print_position_guide()
+
     while True:
         choice = input("Enter difficulty (E/M/H): ").lower()
         if choice == 'e':
@@ -23,7 +24,7 @@ def main():
     while True:
         XO.board = [' ' for _ in range(10)]
         XO.print_board()
-        
+
         while True:
             if XO.winner('O'):
                 print("Sorry, you lose!")
@@ -47,6 +48,11 @@ def main():
                 XO.insert_letter('O', move)
                 print(f"Computer placed an O at position {move}:")
                 XO.print_board()
+
+            if XO.winner('O'):
+                print("Sorry, you lose!")
+                scores['Computer'] += 1
+                break
 
             if XO.is_board_full():
                 print("It's a tie!")
